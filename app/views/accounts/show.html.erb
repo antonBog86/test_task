@@ -1,0 +1,13 @@
+<h1>Balance: <%= @account.balance - @account.blocked_balance %> coins</h1>
+
+<div class="container">
+  <%= button_to "Send Money", new_transaction_path, method: :get, class: 'btn btn-primary' %>
+</div>
+
+<div class="container">
+  <%= button_to "Transactions history", transactions_path, method: :get, class: 'btn btn-primary' %>
+</div>
+
+<div class="container">
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-warning' %>
+</div>

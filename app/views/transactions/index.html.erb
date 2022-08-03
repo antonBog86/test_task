@@ -1,0 +1,28 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Sender</th>
+        <th scope="col">Receiver</th>
+        <th scope="col">Amount shifted</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @transactions.each do |transaction| %>>
+      <tr>
+        <th scope="row"><%= transaction.sender_id %></th>
+        <td><%= transaction.receiver_id %></td>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.status %></td>
+        <td><%= transaction.created_at.strftime('%d/%m/%y %H:%M:%S') %></td>
+      </tr>
+    <% end %>>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <%= button_to "Account", account_path, method: :get, class: 'btn btn-primary' %>
+</div>

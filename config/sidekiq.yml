@@ -1,0 +1,4 @@
+queues:
+  - default
+development:
+  concurrency: 1

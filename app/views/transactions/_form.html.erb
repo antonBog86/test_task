@@ -1,0 +1,15 @@
+<% if @transaction.errors.any? %>
+  <% @transaction.errors.messages.each do |attr, message| %>
+    <div  class="alert alert-danger">
+      <%= message.last %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form_with model: @transaction do |form| %>
+  <%= form.label :receiver_id, 'Account number of receiver',class: 'form-label' %>
+  <%= form.text_field :receiver_id, class: 'form-control', required: true %>
+  <%= form.label :amount, 'Amount of coins', class: 'form-label' %>
+  <%= form.number_field :amount, step: '0.01', class: 'form-control', required: true %>
+  <%= form.submit 'Send coins', class: 'btn btn-primary' %>
+<% end %>

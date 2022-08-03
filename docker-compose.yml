@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mystery
+    ports:
+      - "3307:3306"
+  redis:
+    image: 'redis:5-alpine'
+    command: redis-server
+    ports:
+      - '6379:6379'
+  sidekiq:
+    depends_on:
+      - 'db'
+      - 'redis'
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - '.:/project'
+      - '/project/tmp' # don't mount tmp directory
+    env_file:
+      - .env
+  app:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ".:/app"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    links:
+      - db
+    env_file:
+      - .env
+    # fix trouble with puma not shut down correctly when we stop container that hosts it
+    environment:
+      PIDFILE: /tmp/pids/server.pid
+    tmpfs:
+      - /tmp/pids/
